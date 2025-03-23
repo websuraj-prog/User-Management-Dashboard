@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="containerSearch">
+        <h1>Search Results</h1>
+
+        <!-- Search Bar -->
+        <div class="search-container">
+            <form action="/search" method="GET">
+                <input type="text" name="query" placeholder="Search user..." required>
+                <button class="search-btn" type="submit">Search</button>
+            </form>
+        </div>
+
+        <!-- Table -->
+        <table class="table user-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (users.length > 0) { %>
+                    <% users.forEach(user => { %>
+                        <tr>
+                            <td><%= user._id %></td>
+                            <td><%= user.name %></td>
+                            <td><%= user.email %></td>
+                            <td><%= user.phone %></td>
+                            <td>
+                                <a href="/edit/<%= user._id %>">✏️ Edit</a> |
+                                <a href="/delete/<%= user._id %>" style="color: red;">❌ Delete</a>
+                            </td>
+                        </tr>
+                    <% }) %>
+                <% } else { %>
+                    <tr>
+                        <td colspan="5">No users found.</td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+
+        <!-- Back to Dashboard -->
+        <div class="button-container">
+            <a href="/dashboard">
+                <button class="btn">Go to Dashboard</button>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Signup Page </title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+    <h1> Signup </h1>
+    <% if (success) { %>
+        <div class="success-message">✅ Signup successful! Redirecting to login...</div>
+        <script>
+            setTimeout(() => {
+                window.location.href = "/login";  
+            }, 2000);
+        </script>
+    <% } %>
+    
+    <% if (typeof error !== "undefined" && error) { %>
+        <div class="error-message">❌ <%= error %></div>
+    <% } %>
+    
+    
+
+    </div>
+    
+    <section>
+
+        <form action="/signup" class="form" method="post" id="loginForm">
+
+            <label for="name"> Name </label>
+            <input type="text" name="name" id="name" placeholder="Enter Your Full Name" required>
+            <br>
+            
+            <label for="email"> Email </label>
+            <input type="text" name="email" id="email" placeholder="Enter Your Email ID" required>
+            <br>
+
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" placeholder="Enter Your Password" required>
+            <br>
+
+            <label for="showPassword" >Show Password</label>
+            <input type="checkbox" id="showPassword"> 
+            <br>
+
+            <button type="submit" class="btn"> Signup </button>
+            <br>
+            
+            <h3>
+                Back to <a href="/login"> Login </a>
+            </h3>
+
+        </form>
+
+        <!-- Adding client-side validation using JavaScript -->
+        <script>
+            document.getElementById('loginForm').addEventListener('submit', function (event) {
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+
+                // Email validation
+                const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                if (!emailPattern.test(email)) {
+                    alert('Please enter a valid email address.');
+                    event.preventDefault();  // Prevent the form from submitting
+                    return;
+                }
+
+                // Password validation
+                if (password.length < 6) {
+                    alert('Password should be at least 6 characters long.');
+                    event.preventDefault();  // Prevent the form from submitting
+                    return;
+                }
+            });
+
+            // Show/Hide password functionality
+            document.getElementById('showPassword').addEventListener('change', function () {
+                const passwordField = document.getElementById('password');
+                if (this.checked) {
+                    passwordField.type = 'text';  // Show password
+                } else {
+                    passwordField.type = 'password';  // Hide password
+                }
+            });
+        </script>
+    </section>
+
+</body>
+
+</html>
